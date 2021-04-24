@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Game.Interaction;
 using UnityEngine;
 
 namespace Game.Control
@@ -60,6 +63,9 @@ namespace Game.Control
 
         private new Transform transform;
 
+        [Header("Interaction")]
+        [SerializeField] private GameObject _interactSprite = null;
+
         #endregion
 
         #region Unity Events
@@ -83,6 +89,7 @@ namespace Game.Control
             GetInput();
             FlipBasedOnDirection();
             UpdateAnimator();
+            Interact();
         }
 
         private void FixedUpdate()
@@ -95,6 +102,8 @@ namespace Game.Control
         }
 
         #endregion
+
+        #region Input and Visuals
 
         private void GetInput()
         {
@@ -130,6 +139,10 @@ namespace Game.Control
             }
         }
 
+        #endregion
+
+        #region Movement
+        
         private void Move()
         {
              var currentVelocity = new Vector2(this._inputX * _moveSpeed, _rigidbody.velocity.y);
@@ -193,6 +206,33 @@ namespace Game.Control
             _animator.SetTrigger(_animatorJumpId);
             _isWallJumping = false;
             _wallJumpsLeft--;
+        }
+        
+        #endregion
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void Interact()
+        {
+            var results = new RaycastHit2D[3];
+            var size = Physics2D.RaycastNonAlloc(transform.position, transform.right * transform.localScale.x, results, 3f);
+
+            if (size == 0) return;
+
+            var result = results.Where(x => x.transform != null && x.transform.TryGetComponent(out IInteractable _)).ToArray().FirstOrDefault();
+            IInteractable interactable = result.transform != null ? result.transform.GetComponent<IInteractable>() : null;
+            
+            var isInteractableNull = interactable == null;
+            
+            if (_interactSprite.activeSelf && isInteractableNull) _interactSprite.SetActive(false);
+            else if (!_interactSprite.activeSelf && !isInteractableNull) _interactSprite.SetActive(true);
+
+            if (isInteractableNull) return;
+            _interactSprite.transform.position = (result.transform.position + transform.position) / 2f;
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                interactable.Interact();
+            }
         }
     }
 }
