@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Management;
+﻿using Game.GameManagement;
 using UnityEngine;
 
 namespace Game.Obstacles

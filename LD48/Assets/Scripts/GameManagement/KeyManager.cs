@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Management
+namespace Game.GameManagement
 {
     public class KeyManager : MonoBehaviour
     {
