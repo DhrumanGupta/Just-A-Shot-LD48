@@ -224,6 +224,7 @@ namespace Game.Control
 
             if (isInteractableNull) return;
             _interactSprite.transform.position = (result.transform.position + transform.position) / 2f;
+            _interactSprite.GetComponent<SpriteRenderer>().flipX = transform.localScale.x < 0;
 
             if (Input.GetKeyDown(KeyCode.E))
             {

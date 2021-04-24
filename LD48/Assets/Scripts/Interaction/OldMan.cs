@@ -15,7 +15,7 @@ namespace Game.Interaction
 
         private void HandleInteractionComplete()
         {
-            KeyManager.Instance.AddKey();
+            KeyManager.Instance.AddKeys(1);
         }
     }
 }

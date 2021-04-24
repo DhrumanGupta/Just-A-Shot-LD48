@@ -6,23 +6,28 @@ namespace Game.Management
     {
         public static KeyManager Instance { get; private set; }
 
-        private int _nKeys;
+        private int _keys;
 
         private void Awake()
         {
             if (Instance != null) Destroy(gameObject);
             Instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(transform.root);
         }
 
-        public void UseKey()
+        public bool CanUseKeys(int keys)
         {
-            _nKeys--;
+            return _keys >= keys;
         }
 
-        public void AddKey()
+        public void UseKeys(int keys)
         {
-            _nKeys++;
+            _keys -= keys;
+        }
+
+        public void AddKeys(int keys)
+        {
+            _keys += keys;
         }
     }
 }

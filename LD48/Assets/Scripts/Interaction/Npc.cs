@@ -44,6 +44,8 @@ namespace Game.Interaction
             yield return new WaitForSeconds(1f);
             _chatBox.SetActive(false);
             _isInteracting = false;
+            
+            OnInteractionComplete?.Invoke();
         }
     }
 
