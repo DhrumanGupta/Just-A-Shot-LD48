@@ -263,7 +263,8 @@ MonoBehaviour:
   _frontCheck: {fileID: 1323610226}
   _wallSlideSpeed: 4
   _wallJumps: 1
-  _jumpEffectPrefab: {fileID: 0}
+  _jumpEffectPrefab: {fileID: 2638409881005825786, guid: 13cef581d70f7314080e9292af68d302,
+    type: 3}
   _interactSprite: {fileID: 528198589}
 --- !u!61 &864685921062524493
 BoxCollider2D:

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Game.Interaction;
 using UnityEngine;
 
@@ -56,7 +53,7 @@ namespace Game.Control
         #endregion
 
         private int _animatorRunId;
-        private int _animatorJumpId;
+        private int _animatorGroundId;
 
         [SerializeField] private GameObject _jumpEffectPrefab = null;
         private bool _isJumpEffectPrefabNotNull;
@@ -79,7 +76,7 @@ namespace Game.Control
             this._animator = GetComponent<Animator>();
 
             _animatorRunId = Animator.StringToHash("isWalking");
-            _animatorJumpId = Animator.StringToHash("isJumping");
+            _animatorGroundId = Animator.StringToHash("isGrounded");
 
             _isJumpEffectPrefabNotNull = _jumpEffectPrefab != null;
         }
@@ -124,7 +121,8 @@ namespace Game.Control
 
         private void UpdateAnimator()
         {
-            this._animator.SetBool(_animatorRunId, Mathf.Abs(_rigidbody.velocity.x) > 0.1f);
+            _animator.SetBool(_animatorRunId, Mathf.Abs(_rigidbody.velocity.x) > 0.1f);
+            _animator.SetBool(_animatorGroundId, (_isGrounded || _isWallSliding));
         }
 
         private void CheckTransforms()
@@ -166,12 +164,11 @@ namespace Game.Control
             if (!_isJumping) return;
 
             if (_isJumpEffectPrefabNotNull)
-                Destroy(Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity), 4f);
+                Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity);
 
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
             _rigidbody.AddForce(new Vector2(0, this._jumpForce), ForceMode2D.Impulse);
             
-            _animator.SetTrigger(_animatorJumpId);
             _isJumping = false;
 
             if (_isGrounded)
@@ -203,7 +200,6 @@ namespace Game.Control
             
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             
-            _animator.SetTrigger(_animatorJumpId);
             _isWallJumping = false;
             _wallJumpsLeft--;
         }

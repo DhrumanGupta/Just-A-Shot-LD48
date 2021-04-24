@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace Game.Interaction
 {
-    public class Npc : MonoBehaviour, IInteractable
+    public abstract class Npc : MonoBehaviour, IInteractable
     {
-        [SerializeField] private SpeakableLines[] _linesToSay = null;
+        [SerializeField] private GameObject _chatBox = null;
         [SerializeField] private TextMeshPro _textMesh = null;
+        [SerializeField] private SpeakableLines[] _linesToSay = null;
 
         private bool _isInteracting = false;
-        
+        protected event Action OnInteractionComplete;
+
         public void Interact()
         {
             if (_isInteracting) return;
@@ -22,7 +24,10 @@ namespace Game.Interaction
         private IEnumerator SpeakLines()
         {
             _isInteracting = true;
-            var characterWait = new WaitForSeconds(0.03f);
+            var characterWait = new WaitForSeconds(0.02f);
+            
+            _textMesh.SetText("");
+            _chatBox.SetActive(true);
             
             foreach (var line in _linesToSay)
             {
@@ -36,9 +41,10 @@ namespace Game.Interaction
                 yield return new WaitForSeconds(line.TimeToWait);
             }
 
+            yield return new WaitForSeconds(1f);
+            _chatBox.SetActive(false);
             _isInteracting = false;
         }
-        
     }
 
     [Serializable]
