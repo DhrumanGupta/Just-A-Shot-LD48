@@ -167,9 +167,9 @@ namespace Game.Control
             if (_isJumpEffectPrefabNotNull)
                 Destroy(Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity), 4f);
 
-            _rigidbody.velocity =
-                new Vector2(_rigidbody.velocity.x, Mathf.Clamp(_rigidbody.velocity.y, -1, float.MaxValue));
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
             _rigidbody.AddForce(new Vector2(0, this._jumpForce), ForceMode2D.Impulse);
+            
             _animator.SetTrigger(_animatorJumpId);
             _isJumping = false;
 
@@ -198,9 +198,8 @@ namespace Game.Control
             if (_isJumpEffectPrefabNotNull)
                 Destroy(Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity), 4f);
 
-            _rigidbody.velocity =
-                new Vector2(_rigidbody.velocity.x, Mathf.Clamp(_rigidbody.velocity.y, -1, float.MaxValue));
-            _rigidbody.AddForce(new Vector2(0, this._jumpForce), ForceMode2D.Impulse);
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+            _rigidbody.AddForce(new Vector2(-_inputX * (_jumpForce / 1.5f), _jumpForce), ForceMode2D.Impulse);
             
             _animator.SetTrigger(_animatorJumpId);
             _isWallJumping = false;
