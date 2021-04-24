@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6a1039a90807b8a4bae62b8927db3659, type: 3}
+  m_Sprite: {fileID: 978942612559604503, guid: 1f0e37cddf8d1a94db51cbfe6ec3f8ad, type: 3}
   m_Color: {r: 1, g: 0.8397278, b: 0.6084906, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,15 +117,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b7ae97701af54ca4aa87c98f57613bb3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!114 &864685921062524490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,9 +142,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _moveSpeed: 8
-  _jumpForce: 6
+  _jumpForce: 10.5
   _frictionForce: 2
+  _checkRadius: 0.1
   _groundCheck: {fileID: 864685921789175421}
+  _airJumps: 1
+  _frontCheck: {fileID: 0}
+  _wallSlideSpeed: 4
+  _wallJumps: 1
   _jumpEffectPrefab: {fileID: 0}
 --- !u!61 &864685921062524493
 BoxCollider2D:
@@ -159,11 +164,11 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.0048069954}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.2, y: 2.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
