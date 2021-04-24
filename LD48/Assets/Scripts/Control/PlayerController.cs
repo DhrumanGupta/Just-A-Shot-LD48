@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Control
@@ -48,12 +49,10 @@ namespace Game.Control
         private bool _isWallSliding;
         private bool _isWallJumping;
         private int _wallJumpsLeft;
-        private Transform _lastWallTouched;
 
         #endregion
 
         private int _animatorRunId;
-        private int _animatorIdleId;
         private int _animatorJumpId;
 
         [SerializeField] private GameObject _jumpEffectPrefab = null;
@@ -73,8 +72,7 @@ namespace Game.Control
             this._spriteRenderer = GetComponent<SpriteRenderer>();
             this._animator = GetComponent<Animator>();
 
-            _animatorRunId = Animator.StringToHash("isRunning");
-            _animatorIdleId = Animator.StringToHash("isIdle");
+            _animatorRunId = Animator.StringToHash("isWalking");
             _animatorJumpId = Animator.StringToHash("isJumping");
 
             _isJumpEffectPrefabNotNull = _jumpEffectPrefab != null;
@@ -85,7 +83,6 @@ namespace Game.Control
             GetInput();
             FlipBasedOnDirection();
             UpdateAnimator();
-            print(_wallJumpsLeft);
         }
 
         private void FixedUpdate()
@@ -118,11 +115,7 @@ namespace Game.Control
 
         private void UpdateAnimator()
         {
-            bool isPlayerMoving = _inputX == 0;
-            this._animator.SetBool(_animatorIdleId, isPlayerMoving);
-            if (isPlayerMoving) return;
-
-            this._animator.SetBool(_animatorRunId, Mathf.Abs(_inputX) > 0.1f);
+            this._animator.SetBool(_animatorRunId, Mathf.Abs(_rigidbody.velocity.x) > 0.1f);
         }
 
         private void CheckTransforms()
@@ -131,15 +124,10 @@ namespace Game.Control
             var newWallExists = Physics2D.OverlapCircle(_frontCheck.position, _checkRadius, _whatIsGround);
 
             _isTouchingFront = newWallExists;
-            if (!_isTouchingFront) return;
-            
-            if (newWallExists.transform != _lastWallTouched)
+            if (_isTouchingFront)
             {
                 _wallJumpsLeft = _wallJumps;
-                print("WADAWDWADWA");
             }
-            
-            _lastWallTouched = newWallExists.transform;
         }
 
         private void Move()
@@ -181,7 +169,7 @@ namespace Game.Control
 
         private void WallSlide()
         {
-            _isWallSliding = _isTouchingFront && !_isGrounded && _inputX != 0;
+            _isWallSliding = _isTouchingFront && !_isGrounded; // && _inputX != 0;
 
             if (_isWallSliding)
             {
@@ -199,7 +187,8 @@ namespace Game.Control
                 Destroy(Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity), 4f);
 
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
-            _rigidbody.AddForce(new Vector2(-_inputX * (_jumpForce / 1.5f), _jumpForce), ForceMode2D.Impulse);
+            
+            _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
             
             _animator.SetTrigger(_animatorJumpId);
             _isWallJumping = false;
