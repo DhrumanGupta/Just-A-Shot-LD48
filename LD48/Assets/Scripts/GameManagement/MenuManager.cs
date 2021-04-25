@@ -48,11 +48,11 @@ namespace Game.GameManagement
             transform.position = position;
         }
 
-        public void OpenHelp()
+        public void SetHelpPanel(bool state)
         {
-            _helpButton.SetActive(false);
-            _helpPanel.SetActive(true);
-            _postProcessingVolume.enabled = true;
+            _helpButton.SetActive(!state);
+            _helpPanel.SetActive(state);
+            _postProcessingVolume.enabled = state;
         }
         
 

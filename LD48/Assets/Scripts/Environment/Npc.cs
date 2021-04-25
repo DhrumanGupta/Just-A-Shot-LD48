@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Environment
 {
-    public abstract class Npc : MonoBehaviour, IInteractable
+    public class Npc : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameObject _chatBox = null;
         [SerializeField] private TextMeshPro _textMesh = null;
@@ -19,10 +19,24 @@ namespace Game.Environment
         private bool _isInteracting = false;
         protected event Action OnInteractionComplete;
 
-        public void Interact()
+        private void Awake()
         {
-            if (_isInteracting) return;
-            StartCoroutine(SpeakLines());
+            if (_chatBox == null)
+                _chatBox = transform.GetChild(0).gameObject;
+
+            if (_chatBox == null)
+            {
+                Debug.LogError($"ChatBox for GameObject '{gameObject.name}' not assigned.");
+            }
+
+                if (_textMesh == null)
+                _textMesh = _chatBox.transform.GetChild(0).GetComponent<TextMeshPro>();
+        }
+
+        public IEnumerator Interact()
+        {
+            if (_isInteracting) yield break;
+            yield return SpeakLines();
         }
 
         private IEnumerator SpeakLines()

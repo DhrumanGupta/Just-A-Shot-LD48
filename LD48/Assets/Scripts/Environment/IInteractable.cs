@@ -1,7 +1,9 @@
-﻿namespace Game.Environment
+﻿using System.Collections;
+
+namespace Game.Environment
 {
     public interface IInteractable
     {
-        void Interact();
+        IEnumerator Interact();
     }
 }

@@ -231,7 +231,7 @@ namespace Game.Control
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                interactable.Interact();
+                StartCoroutine(interactable.Interact());
             }
         }
     }
