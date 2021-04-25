@@ -258,7 +258,7 @@ MonoBehaviour:
   _moveSpeed: 8
   _jumpForce: 11
   _frictionForce: 2
-  _checkRadius: 0.15
+  _checkRadius: 0.2
   _groundCheck: {fileID: 864685921789175421}
   _airJumps: 1
   _frontCheck: {fileID: 1323610226}

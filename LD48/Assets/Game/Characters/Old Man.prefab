@@ -399,3 +399,8 @@ MonoBehaviour:
     <TimeToWait>k__BackingField: 2
   - <Line>k__BackingField: Take this key
     <TimeToWait>k__BackingField: 2
+  _linesToSayAfter:
+  - <Line>k__BackingField: Are you scared to proceed?
+    <TimeToWait>k__BackingField: 2
+  - <Line>k__BackingField: There is no shame in turning back.
+    <TimeToWait>k__BackingField: 2

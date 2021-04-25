@@ -4,8 +4,6 @@ namespace Game.Interaction
 {
     public class OldMan : Npc
     {
-        private bool _hasInteracted = false;
-        
         private void Awake()
         {
             base.OnInteractionComplete += HandleInteractionComplete;
@@ -13,9 +11,7 @@ namespace Game.Interaction
 
         private void HandleInteractionComplete()
         {
-            if (_hasInteracted) return;
-            
-            _hasInteracted = true;
+            if (HasInteracted) return;
             KeyManager.Instance.AddKeys(1);
         }
     }

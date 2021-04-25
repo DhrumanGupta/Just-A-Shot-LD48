@@ -2,10 +2,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.AI;
 
 namespace Game.SceneManagement
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class Portal : MonoBehaviour
     {
         enum DestinationIdentifier
@@ -22,7 +22,7 @@ namespace Game.SceneManagement
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Coeus"))
+            if (other.CompareTag("Player"))
             {
                 StartCoroutine(TransitionToScene());
             }
@@ -68,8 +68,7 @@ namespace Game.SceneManagement
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject player = GameObject.FindWithTag("Players");
-            player.transform.position = otherPortal.spawnPoint.position;
+            GameObject.FindWithTag("Player").transform.position = otherPortal.spawnPoint.position;
         }
 
         private Portal GetOtherPortal()
@@ -82,5 +81,16 @@ namespace Game.SceneManagement
             }
             return null;
         }
+        
+        #region Gizmos
+
+        private void OnDrawGizmos()
+        {
+            var bounds = GetComponent<BoxCollider2D>().bounds;
+            Gizmos.color = new Color32(255, 0, 0, 100);
+            Gizmos.DrawCube(bounds.center, bounds.size);
+        }
+
+        #endregion
     }
 }
