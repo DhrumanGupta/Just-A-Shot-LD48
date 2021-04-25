@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Game.GameManagement
 {
     public class MenuManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _player;
-        [SerializeField] private Camera _camera;
+        [SerializeField] private Camera _camera = null;
         
+        [SerializeField] private Placeable[] _left, _right = null;
+
         [Space]
-        [SerializeField] private Placeable[] _left = null;
-        [SerializeField] private Placeable[] _right = null;
-        
-        [Space]
-        [SerializeField] private GameObject _optionsPanel;
+        [SerializeField] private Volume _postProcessingVolume = null;
+        [SerializeField] private GameObject _helpButton, _helpPanel  = null;
 
         private void Awake()
         {
@@ -47,10 +48,13 @@ namespace Game.GameManagement
             transform.position = position;
         }
 
-        public void OpenSettings()
+        public void OpenHelp()
         {
-            
+            _helpButton.SetActive(false);
+            _helpPanel.SetActive(true);
+            _postProcessingVolume.enabled = true;
         }
+        
 
         [Serializable]
         public class Placeable

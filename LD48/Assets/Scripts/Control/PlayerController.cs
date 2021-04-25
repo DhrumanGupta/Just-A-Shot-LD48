@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Game.Interaction;
+using Game.Environment;
 using UnityEngine;
 
 namespace Game.Control
@@ -26,8 +26,8 @@ namespace Game.Control
 
         private float _inputX;
 
-        [Space] [Header("Movement")] [SerializeField]
-        private float _moveSpeed;
+        [Space] [Header("Movement")]
+        [SerializeField] private float _moveSpeed;
 
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _frictionForce;

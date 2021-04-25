@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Interaction
+namespace Game.Environment
 {
     public abstract class Npc : MonoBehaviour, IInteractable
     {

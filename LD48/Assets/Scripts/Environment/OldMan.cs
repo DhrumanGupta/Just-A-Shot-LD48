@@ -1,12 +1,12 @@
 ﻿using Game.GameManagement;
 
-namespace Game.Interaction
+namespace Game.Environment
 {
     public class OldMan : Npc
     {
         private void Awake()
         {
-            base.OnInteractionComplete += HandleInteractionComplete;
+            OnInteractionComplete += HandleInteractionComplete;
         }
 
         private void HandleInteractionComplete()

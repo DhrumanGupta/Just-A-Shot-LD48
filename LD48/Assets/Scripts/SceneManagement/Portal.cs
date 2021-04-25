@@ -68,7 +68,8 @@ namespace Game.SceneManagement
 
         private void UpdatePlayer(Portal otherPortal)
         {
-            GameObject.FindWithTag("Player").transform.position = otherPortal.spawnPoint.position;
+            var player = GameObject.FindWithTag("Player");
+            player.transform.position = otherPortal.spawnPoint.position;
         }
 
         private Portal GetOtherPortal()
