@@ -31,7 +31,8 @@ namespace Game.Environment
             {
                 // If collision was from not the top, dont damage the object
                 var contact = other.GetContact(0);
-                if (Vector3.Dot(contact.normal, Vector3.down) <= 0.5) return;
+                print(contact.normal);
+                if (Vector3.Dot(contact.normal, Vector3.down) <= 0.4) return;
                 
                 DamageObject();
             }
@@ -42,11 +43,9 @@ namespace Game.Environment
             _hitsTaken++;
             if (_hitsTaken <= _sprites.Length - 1) _spriteRenderer.sprite = _sprites[_hitsTaken];
 
-            if (_hitsTaken >= _hitsToDestroy)
-            {
-                _collider.enabled = false;
-                if (_drop != null) Instantiate(_drop, transform.position, Quaternion.identity);
-            }
+            if (_hitsTaken < _hitsToDestroy) return;
+            _collider.enabled = false;
+            if (_drop != null) Instantiate(_drop, transform.position, Quaternion.identity);
         }
     }
 }

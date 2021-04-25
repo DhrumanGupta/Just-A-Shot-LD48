@@ -54,6 +54,7 @@ namespace Game.Control
 
         private int _animatorRunId;
         private int _animatorGroundId;
+        private int _animatorWallSlideId;
 
         [SerializeField] private GameObject _jumpEffectPrefab = null;
         private bool _isJumpEffectPrefabNotNull;
@@ -77,12 +78,14 @@ namespace Game.Control
 
             _animatorRunId = Animator.StringToHash("isWalking");
             _animatorGroundId = Animator.StringToHash("isGrounded");
+            _animatorWallSlideId = Animator.StringToHash("isWallsliding");
 
             _isJumpEffectPrefabNotNull = _jumpEffectPrefab != null;
         }
 
         private void Update()
         {
+            CheckTransforms();
             GetInput();
             FlipBasedOnDirection();
             UpdateAnimator();
@@ -91,7 +94,6 @@ namespace Game.Control
 
         private void FixedUpdate()
         {
-            CheckTransforms();
             Move();
             Jump();
             WallSlide();
@@ -122,7 +124,8 @@ namespace Game.Control
         private void UpdateAnimator()
         {
             _animator.SetBool(_animatorRunId, Mathf.Abs(_rigidbody.velocity.x) > 0.1f);
-            _animator.SetBool(_animatorGroundId, (_isGrounded || _isWallSliding));
+            _animator.SetBool(_animatorGroundId, _isGrounded);
+            _animator.SetBool(_animatorWallSlideId, _isWallSliding);
         }
 
         private void CheckTransforms()

@@ -47,6 +47,9 @@ TagManager:
   - name: Background
     uniqueID: 2172369575
     locked: 0
+  - name: Ground (On Ground)
+    uniqueID: 2884616367
+    locked: 0
   - name: NPCs
     uniqueID: 2477494771
     locked: 0
