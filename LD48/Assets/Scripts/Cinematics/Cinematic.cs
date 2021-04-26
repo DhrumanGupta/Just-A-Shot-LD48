@@ -1,4 +1,5 @@
-﻿using Game.Core;
+﻿using System.Collections;
+using Game.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,6 @@ namespace Game.Cinematics
         [SerializeField] private Path _cameraPath = null;
         
         [Header("Stats")]
-        [SerializeField] private float _waypointWaitTime = 1f;
         [SerializeField] private float _waypointTolerance = 0.6f;
         [SerializeField] private float _speed = 3f;
         [SerializeField] private float[] _waitTimes = null;
@@ -24,7 +24,8 @@ namespace Game.Cinematics
         private int _currentWaypointIndex = 0;
         private Vector3 _movement = Vector3.zero;
         private bool _isPlaying;
-        
+        private bool _reachedEnd;
+
         private void Awake()
         {
             if (_camera == null) _camera = Camera.main.transform;
@@ -34,28 +35,27 @@ namespace Game.Cinematics
         private void Update()
         {
             if (!_isPlaying) return;
-            
+            print(AtWaypoint());
             if (AtWaypoint())
             {
-                if (_waitTimes.Length - 1 > _currentWaypointIndex)
-                    _timeSinceTouchedWaypoint = _waitTimes[_waitTimes.Length - 1];
-                else 
-                    _timeSinceTouchedWaypoint = -_waitTimes[_currentWaypointIndex];
-                
-                if (_currentWaypointIndex != _cameraPath.transform.childCount)
+                _timeSinceTouchedWaypoint = 0;
+                if (_currentWaypointIndex != _cameraPath.transform.childCount - 1)
                 {
                     CycleWaypoint();
                 }
                 else
                 {
-                    _isPlaying = false;
-                    _onEnd?.Invoke();
+                    if (_reachedEnd) return;
+                    _reachedEnd = true;
+                    print("END");
+                    StartCoroutine(EndAfterWait(GetWaitTime()));
+                    _movement = Vector3.zero;
                 }
             }
 
             var nextPosition = GetCurrentWaypoint();
             
-            if (_timeSinceTouchedWaypoint > _waypointWaitTime)
+            if (_timeSinceTouchedWaypoint > GetWaitTime())
             {
                 _movement = (nextPosition - _camera.position).normalized;
             }
@@ -68,6 +68,18 @@ namespace Game.Cinematics
             _camera.position = Vector3.Lerp(currentPos, newPos, Time.deltaTime);
         }
 
+        private float GetWaitTime()
+        {
+            return _waitTimes[_currentWaypointIndex];
+        }
+
+        private IEnumerator EndAfterWait(float wait)
+        {
+            yield return new WaitForSeconds(wait);
+            _onEnd?.Invoke();
+            _isPlaying = false;
+        }
+        
         public void Play()
         {
             if (_isPlaying) return;

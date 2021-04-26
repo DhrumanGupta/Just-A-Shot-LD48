@@ -4,6 +4,8 @@ namespace Game.Core
 {
     public class Path : MonoBehaviour
     {
+        #if UNITY_EDITOR
+        
         private void OnDrawGizmos()
         {
             if (UnityEditor.Selection.activeGameObject == this.gameObject)
@@ -23,6 +25,8 @@ namespace Game.Core
                 Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(j));
             }
         }
+        
+        #endif
 
         public int GetNextIndex(int i)
         {

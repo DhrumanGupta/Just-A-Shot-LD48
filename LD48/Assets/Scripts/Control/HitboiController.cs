@@ -72,6 +72,7 @@ namespace Game.Control
 
         private void FixedUpdate()
         {
+            print("movement");
             _rigidbody.AddForce(_movement);
             
             // Apply some friction
