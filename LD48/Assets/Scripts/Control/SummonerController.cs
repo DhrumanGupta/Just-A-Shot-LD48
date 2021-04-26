@@ -37,7 +37,6 @@ namespace Game.Control
         [SerializeField] private GameObject[] _runes = null;
         [SerializeField] private GameObject _laser = null;
 
-        private Fighter _fighter;
         private Health _health;
         private Health _player;
         private Rigidbody2D _rigidbody;
@@ -58,7 +57,6 @@ namespace Game.Control
         {
             _isPatrolPathNotNull = _patrolPath != null;
             _health = GetComponent<Health>();
-            _fighter = GetComponent<Fighter>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -72,8 +70,9 @@ namespace Game.Control
         {
             if (_health.IsDead) return;
 
-            if (_fighter.CanAttack(_player))
+            if (CanAttack(_player))
             {
+                print("Atteck");
                 AttackBehaviour();
             }
             else

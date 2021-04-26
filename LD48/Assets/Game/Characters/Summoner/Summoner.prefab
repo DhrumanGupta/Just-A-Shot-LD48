@@ -113,8 +113,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _patrolPath: {fileID: 0}
-  _runes: []
-  _laser: {fileID: 0}
+  _runes:
+  - {fileID: 4346747232184445326, guid: 0b67a909234894d4091db21c7988d04c, type: 3}
+  - {fileID: 8346990520124955991, guid: bb1e7aba2babc6e449730ada287843cf, type: 3}
+  - {fileID: 7960036328262658629, guid: 85d20d03b1d89324b91e9784872dd1e1, type: 3}
+  _laser: {fileID: 2689842880190215290, guid: daa5a699a55e34b4096626a5363d8731, type: 3}
   _showGizmosGlobally: 1
 --- !u!95 &3744890670701608537
 Animator:

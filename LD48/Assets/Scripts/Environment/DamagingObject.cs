@@ -8,7 +8,7 @@ namespace Game.Environment
     public class DamagingObject : MonoBehaviour
     {
         [SerializeField] private int _damage = 1;
-        [SerializeField] private Health _target = null;
+        private Health _target = null;
 
         public void SetData(int damage, Health target)
         {
