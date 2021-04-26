@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Combat;
+using Game.Core;
 using UnityEngine;
 
 namespace Game.Control
@@ -20,7 +21,7 @@ namespace Game.Control
         [SerializeField] private float _frictionForce = 2f;
 
         [Header("References")] [SerializeField]
-        private PatrolPath _patrolPath = null;
+        private Path _patrolPath = null;
 
         [SerializeField] private GameObject _questionMark = null;
 

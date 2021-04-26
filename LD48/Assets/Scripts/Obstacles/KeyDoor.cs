@@ -24,7 +24,7 @@ namespace Game.Obstacles
             {
                 KeyManager.Instance.UseKeys(_keysToUnlock);
             }
-            _door.SetState(false);
+            _door.SetState(true);
         }
     }
 }

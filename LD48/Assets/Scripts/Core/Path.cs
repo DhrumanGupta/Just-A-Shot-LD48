@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Game.Control
+namespace Game.Core
 {
-    public class PatrolPath : MonoBehaviour
+    public class Path : MonoBehaviour
     {
         private void OnDrawGizmos()
         {

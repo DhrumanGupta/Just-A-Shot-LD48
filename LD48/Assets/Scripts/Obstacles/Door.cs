@@ -22,11 +22,11 @@ namespace Game.Obstacles
         /// <summary>
         /// Set's the doors state
         /// </summary>
-        /// <param name="isVisible">The state of the door</param>
-        public void SetState(bool isVisible)
+        /// <param name="isOpen">The state of the door</param>
+        public void SetState(bool isOpen)
         {
-            _collider.enabled = isVisible;
-            _animator.SetBool(_animatorOpenId, isVisible);
+            _collider.enabled = !isOpen;
+            _animator.SetBool(_animatorOpenId, isOpen);
         }
     }
 }

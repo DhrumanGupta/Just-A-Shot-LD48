@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Game.Combat;
 using Game.Environment;
 using UnityEngine;
@@ -246,6 +247,17 @@ namespace Game.Control
 
             if (!other.collider.TryGetComponent(out Health target)) return;
             _fighter.Attack(target);
+        }
+
+        private void OnEnable()
+        {
+            _rigidbody.isKinematic = false;
+        }
+        
+        private void OnDisable()
+        {
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.isKinematic = true;
         }
     }
 }
