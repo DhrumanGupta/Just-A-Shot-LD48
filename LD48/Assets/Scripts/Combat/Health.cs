@@ -9,6 +9,9 @@ namespace Game.Combat
         [SerializeField] private float _maxHealth = 100f;
         private float _health;
 
+        [SerializeField] private GameObject _dropOnDeath = null;
+        [SerializeField] private GameObject _deathEffect = null;
+
         public bool IsDead { get; private set; } = false;
 
         private void Start()
@@ -28,10 +31,13 @@ namespace Game.Combat
         private void Die()
         {
             if (IsDead) return;
-            
-            IsDead = true;
 
-            GetComponent<Animator>().SetTrigger("die");
+            IsDead = true;
+            var pos = transform.position;
+            if (_dropOnDeath != null) Instantiate(_dropOnDeath, pos, Quaternion.identity);
+            if (_deathEffect != null) Instantiate(_deathEffect, pos, Quaternion.identity);
+
+            Destroy(gameObject);
         }
 
         public object CaptureState()
@@ -49,4 +55,3 @@ namespace Game.Combat
         }
     }
 }
-

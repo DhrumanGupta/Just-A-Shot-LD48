@@ -25,7 +25,7 @@ namespace Game.Obstacles
         /// <param name="isVisible">The state of the door</param>
         public void SetState(bool isVisible)
         {
-            _collider.isTrigger = !isVisible;
+            _collider.enabled = isVisible;
             _animator.SetBool(_animatorOpenId, isVisible);
         }
     }

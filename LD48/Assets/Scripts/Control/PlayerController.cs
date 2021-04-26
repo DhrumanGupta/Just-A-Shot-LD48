@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Game.Control
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Fighter))]
     [RequireComponent(typeof(Health))]
@@ -86,7 +86,6 @@ namespace Game.Control
 
         private void Update()
         {
-            CheckTransforms();
             GetInput();
             FlipBasedOnDirection();
             UpdateAnimator();
@@ -95,6 +94,7 @@ namespace Game.Control
 
         private void FixedUpdate()
         {
+            CheckTransforms();
             Move();
             Jump();
             WallSlide();
@@ -242,7 +242,7 @@ namespace Game.Control
         private void OnCollisionEnter2D(Collision2D other)
         {
             // If collision wasn't from the bottom, dont do anything
-            if (Vector3.Dot(other.GetContact(0).normal, Vector3.up) <= 0.3) return;
+            if (Vector3.Dot(other.GetContact(0).normal, Vector3.up) <= 0.1) return;
 
             if (!other.collider.TryGetComponent(out Health target)) return;
             _fighter.Attack(target);

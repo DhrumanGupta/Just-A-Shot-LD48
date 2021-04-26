@@ -10,7 +10,7 @@ namespace Game.Control
     [RequireComponent(typeof(Fighter))]
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class AIController : MonoBehaviour
+    public class HitboiController : MonoBehaviour
     {
         [Header("Stats")] [SerializeField] private float _chaseDistance = 5f;
         [SerializeField] private float _suspicionTime = 3f;

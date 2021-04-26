@@ -116,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 3453987171099244192, guid: 2656964061df42f418bda83554a0d5c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.28
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 3453987171099244192, guid: 2656964061df42f418bda83554a0d5c8,
         type: 3}
@@ -163,10 +163,30 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 2983242424778223470}
+    - target: {fileID: 3453987171099244194, guid: 2656964061df42f418bda83554a0d5c8,
+        type: 3}
+      propertyPath: _offset.y
+      value: -2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3453987171099244197, guid: 2656964061df42f418bda83554a0d5c8,
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453987171099244199, guid: 2656964061df42f418bda83554a0d5c8,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453987171099244199, guid: 2656964061df42f418bda83554a0d5c8,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453987171099244199, guid: 2656964061df42f418bda83554a0d5c8,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2656964061df42f418bda83554a0d5c8, type: 3}
@@ -191,12 +211,12 @@ PrefabInstance:
     - target: {fileID: 864685921062524492, guid: eda68dd1f454bbb40aaa0dee8761732d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.87
+      value: -9.8
       objectReference: {fileID: 0}
     - target: {fileID: 864685921062524492, guid: eda68dd1f454bbb40aaa0dee8761732d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.6
+      value: -2.3
       objectReference: {fileID: 0}
     - target: {fileID: 864685921062524492, guid: eda68dd1f454bbb40aaa0dee8761732d,
         type: 3}
@@ -243,7 +263,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1698421286280632180, guid: eda68dd1f454bbb40aaa0dee8761732d,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.1293112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698421286280632180, guid: eda68dd1f454bbb40aaa0dee8761732d,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.035344422
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 864685921062524493, guid: eda68dd1f454bbb40aaa0dee8761732d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eda68dd1f454bbb40aaa0dee8761732d, type: 3}
 --- !u!4 &2983242424778223470 stripped
 Transform:
