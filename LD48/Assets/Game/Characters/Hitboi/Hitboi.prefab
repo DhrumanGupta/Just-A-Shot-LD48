@@ -171,7 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d104735037843068b7cb6be0837f4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultWeapon: {fileID: 11400000, guid: 5439e742da7889743ad7ac042965d9f8, type: 2}
+  _damage: 1
+  _attackRange: 1
   _timeBetweenAttacks: 1
 --- !u!114 &3744890670701608533
 MonoBehaviour:
@@ -252,7 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb5771d7a4d57925a9f6bb8a48bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chaseDistance: 4
+  _chaseDistance: 5.5
   _suspicionTime: 3
   _waypointDwellTime: 1
   _waypointTolerance: 1

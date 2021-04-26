@@ -29,6 +29,7 @@ namespace Game.Control
         private Health _health;
         private Health _player;
         private Rigidbody2D _rigidbody;
+        private SpriteRenderer _spriteRenderer;
         private Animator _animator;
 
         private Vector3 _guardPosition;
@@ -48,6 +49,7 @@ namespace Game.Control
             _fighter = GetComponent<Fighter>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
             _guardPosition = transform.position;
 
             _player = GameObject.FindWithTag("Player").GetComponent<Health>();
@@ -95,9 +97,7 @@ namespace Game.Control
             var velocity = _rigidbody.velocity.x;
             if (Mathf.Abs(velocity) < 0.1f) return;
             
-            var localScale = transform.localScale;
-            localScale.x = velocity < 0 ? -_localScale : _localScale;
-            transform.localScale = localScale;
+            _spriteRenderer.flipX = velocity < 0;
         }
         
         private void UpdateAnimator()
