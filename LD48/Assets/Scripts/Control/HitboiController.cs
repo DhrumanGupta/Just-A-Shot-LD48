@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Game.Control
 {
     [RequireComponent(typeof(Animator))]
-    [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Fighter))]
     [RequireComponent(typeof(Health))]
@@ -18,6 +17,7 @@ namespace Game.Control
         [SerializeField] private float _waypointDwellTime = 1f;
         [SerializeField] private float _waypointTolerance = 0.6f;
         [SerializeField] private float _speed = 7f;
+        [Range(0, 1)]
         [SerializeField] private float _frictionForce = 2f;
 
         [Header("References")] [SerializeField]
@@ -29,6 +29,7 @@ namespace Game.Control
         private Health _health;
         private Health _player;
         private Rigidbody2D _rigidbody;
+        private Animator _animator;
 
         private Vector3 _guardPosition;
         private float _timeSinceLastSawPlayer = Mathf.Infinity;
@@ -36,15 +37,18 @@ namespace Game.Control
         private int _currentWaypointIndex = 0;
         
         private Vector2 _movement = Vector2.zero;
+        private int _animatorRunId;
 
         private void Start()
         {
             _health = GetComponent<Health>();
             _fighter = GetComponent<Fighter>();
             _rigidbody = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
             _guardPosition = transform.position;
 
             _player = GameObject.FindWithTag("Player").GetComponent<Health>();
+            _animatorRunId = Animator.StringToHash("isWalking");
         }
 
         private void Update()
@@ -68,18 +72,23 @@ namespace Game.Control
             }
 
             UpdateTimers();
+            UpdateAnimator();
         }
 
         private void FixedUpdate()
         {
-            print(_movement);
             _rigidbody.AddForce(_movement, ForceMode2D.Impulse);
             
             // Apply some friction
-            Vector2 friction = _rigidbody.velocity.normalized * _frictionForce;
-            friction.x *= -1;
+            Vector2 friction = _rigidbody.velocity * _frictionForce;
+            friction.x *= -1f;
             friction.y = 0;
             _rigidbody.AddForce(friction, ForceMode2D.Force);
+        }
+
+        private void UpdateAnimator()
+        {
+            _animator.SetBool(_animatorRunId, Mathf.Abs(_movement.x) > 0.1f);
         }
 
         private void AttackBehaviour()
@@ -90,11 +99,9 @@ namespace Game.Control
             {
                 var distance = Mathf.Clamp(_player.transform.position.x - _rigidbody.position.x, -1, 1) * _speed;
                 _movement = new Vector2(distance, 0);
-                print("going");
                 return;
             }
             
-            print("attack");
             _fighter.Attack(_player);
         }
 
