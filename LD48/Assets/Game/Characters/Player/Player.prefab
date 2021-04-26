@@ -308,7 +308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d104735037843068b7cb6be0837f4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultWeapon: {fileID: 11400000, guid: 5439e742da7889743ad7ac042965d9f8, type: 2}
+  _damage: 1
+  _attackRange: 1
   _timeBetweenAttacks: 1
 --- !u!114 &7151107873497199549
 MonoBehaviour:
@@ -322,7 +323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be5f935015402f4aa777f33e7bfe172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 10
+  _dropOnDeath: {fileID: 0}
+  _deathEffect: {fileID: 0}
 --- !u!114 &3851559558940259142
 MonoBehaviour:
   m_ObjectHideFlags: 0

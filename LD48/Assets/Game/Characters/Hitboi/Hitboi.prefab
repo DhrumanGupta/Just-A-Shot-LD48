@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5cb5771d7a4d57925a9f6bb8a48bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chaseDistance: 2.5
+  _chaseDistance: 4
   _suspicionTime: 3
   _waypointDwellTime: 1
   _waypointTolerance: 1
@@ -273,6 +273,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.208271, y: -0.04120171}
+  m_Offset: {x: 0.15, y: -0.16332842}
   serializedVersion: 2
-  m_Radius: 1.3278491
+  m_Radius: 1.2339054

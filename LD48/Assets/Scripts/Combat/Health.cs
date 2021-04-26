@@ -6,7 +6,7 @@ namespace Game.Combat
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] private float _maxHealth = 100f;
+        [SerializeField] private float _maxHealth = 1f;
         private float _health;
 
         [SerializeField] private GameObject _dropOnDeath = null;

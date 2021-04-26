@@ -39,8 +39,11 @@ namespace Game.Control
         private Vector2 _movement = Vector2.zero;
         private int _animatorRunId;
 
+        private float _localScale;
+
         private void Start()
         {
+            _localScale = transform.localScale.x;
             _health = GetComponent<Health>();
             _fighter = GetComponent<Fighter>();
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -73,6 +76,7 @@ namespace Game.Control
 
             UpdateTimers();
             UpdateAnimator();
+            FlipBasedOnMovement();
         }
 
         private void FixedUpdate()
@@ -86,6 +90,16 @@ namespace Game.Control
             _rigidbody.AddForce(friction, ForceMode2D.Force);
         }
 
+        private void FlipBasedOnMovement()
+        {
+            var velocity = _rigidbody.velocity.x;
+            if (Mathf.Abs(velocity) < 0.1f) return;
+            
+            var localScale = transform.localScale;
+            localScale.x = velocity < 0 ? -_localScale : _localScale;
+            transform.localScale = localScale;
+        }
+        
         private void UpdateAnimator()
         {
             _animator.SetBool(_animatorRunId, Mathf.Abs(_movement.x) > 0.1f);
@@ -153,6 +167,12 @@ namespace Game.Control
         {
             float distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
             return distanceToPlayer < _chaseDistance;
+        }
+        
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (!other.collider.TryGetComponent(out Health target)) return;
+            _fighter.Attack(target);
         }
 
         private void OnDrawGizmosSelected()

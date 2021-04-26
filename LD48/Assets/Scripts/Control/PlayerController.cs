@@ -243,7 +243,7 @@ namespace Game.Control
         private void OnCollisionEnter2D(Collision2D other)
         {
             // If collision wasn't from the bottom, dont do anything
-            if (Vector3.Dot(other.GetContact(0).normal, Vector3.up) <= 0.1) return;
+            if (Vector3.Dot(other.GetContact(0).normal, Vector3.up) <= 0.75f) return;
 
             if (!other.collider.TryGetComponent(out Health target)) return;
             _fighter.Attack(target);
