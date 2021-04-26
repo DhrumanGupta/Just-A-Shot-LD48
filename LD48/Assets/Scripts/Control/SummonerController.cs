@@ -1,29 +1,41 @@
 ﻿using System;
+using System.Collections;
 using Game.Combat;
 using Game.Core;
+using Game.Environment;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.Control
 {
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Fighter))]
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class HitboiController : MonoBehaviour
+    public class SummonerController : MonoBehaviour
     {
-        [Header("Stats")] [SerializeField] private float _chaseDistance = 5f;
-        [SerializeField] private float _suspicionTime = 3f;
+        [Header("Stats")]
         [SerializeField] private float _waypointDwellTime = 1f;
         [SerializeField] private float _waypointTolerance = 0.6f;
         [SerializeField] private float _speed = 7f;
         [Range(0, 1)]
         [SerializeField] private float _frictionForce = 2f;
 
-        [Header("References")] [SerializeField]
-        private Path _patrolPath = null;
+        [Space]
+        [Header("Attack Settings")]
+        [SerializeField] private float _damage = 1f;
+        [SerializeField] private float _attackRange = 1f;
+        [SerializeField] private float _timeBetweenAttacks = 1f;
+        [SerializeField] private float _runeScaleTime = 2f;
+        [SerializeField] private AnimationCurve _runeScaleCurve = null;
+        
+        private float _timeSinceLastAttack = Mathf.Infinity;
 
-        [SerializeField] private GameObject _questionMark = null;
+        [Space]
+        [Header("References")]
+        [SerializeField] private Path _patrolPath = null;
+        [SerializeField] private GameObject[] _runes = null;
+        [SerializeField] private GameObject _laser = null;
 
         private Fighter _fighter;
         private Health _health;
@@ -33,20 +45,16 @@ namespace Game.Control
         private Animator _animator;
 
         private Vector3 _guardPosition;
-        private float _timeSinceLastSawPlayer = Mathf.Infinity;
         private float _timeSinceTouchedWaypoint = Mathf.Infinity;
         private int _currentWaypointIndex = 0;
         
         private Vector2 _movement = Vector2.zero;
-        private int _animatorRunId;
-
-        private float _localScale;
+        private int _animatorAttackId;
         private bool _isPatrolPathNotNull;
 
         private void Start()
         {
             _isPatrolPathNotNull = _patrolPath != null;
-            _localScale = transform.localScale.x;
             _health = GetComponent<Health>();
             _fighter = GetComponent<Fighter>();
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -55,26 +63,19 @@ namespace Game.Control
             _guardPosition = transform.position;
 
             _player = GameObject.FindWithTag("Player").GetComponent<Health>();
-            _animatorRunId = Animator.StringToHash("isWalking");
+            _animatorAttackId = Animator.StringToHash("isAttacking");
         }
 
         private void Update()
         {
             if (_health.IsDead) return;
 
-            if (InAttackRangeOfPlayer())
+            if (_fighter.CanAttack(_player))
             {
-                if (_questionMark.activeSelf) _questionMark.SetActive(false);
                 AttackBehaviour();
-            }
-            else if (_timeSinceLastSawPlayer < _suspicionTime)
-            {
-                if (!_questionMark.activeSelf) _questionMark.SetActive(true);
-                _movement = Vector2.zero;
             }
             else
             {
-                if (_questionMark.activeSelf) _questionMark.SetActive(false);
                 PatrolBehaviour();
             }
 
@@ -104,21 +105,35 @@ namespace Game.Control
         
         private void UpdateAnimator()
         {
-            _animator.SetBool(_animatorRunId, Mathf.Abs(_movement.x) > 0.1f);
+            _animator.SetBool(_animatorAttackId, Mathf.Abs(_movement.x) > 0.1f);
         }
 
         private void AttackBehaviour()
         {
-            _timeSinceLastSawPlayer = 0;
+            if (_timeBetweenAttacks > _timeSinceLastAttack) return;
+            StartCoroutine(SpawnRuneLaser());
 
-            if (!_fighter.CanAttack(_player))
-            {
-                var distance = Mathf.Clamp(_player.transform.position.x - _rigidbody.position.x, -1, 1) * _speed;
-                _movement = new Vector2(distance, 0);
-                return;
-            }
+        }
+
+        private IEnumerator SpawnRuneLaser()
+        {
+            var rune = Instantiate(_runes[Random.Range(0, _runes.Length)], _player.transform.position,
+                Quaternion.identity).transform;
             
-            _fighter.Attack(_player);
+            var startScale = rune.localScale;
+            var endScale = startScale * 1.2f;
+            var start = Time.time;
+
+            while (Time.time < start + _runeScaleTime)
+            {
+                float completion = (Time.time - start) / _runeScaleTime;
+                rune.localScale = Vector3.Lerp(startScale, endScale, _runeScaleCurve.Evaluate(completion));
+                yield return null;
+            }
+
+            rune.localScale = endScale;
+            
+            Instantiate(_laser, rune.position, Quaternion.identity).GetComponent<DamagingObject>().SetData(_damage, _player);
         }
 
         private void PatrolBehaviour()
@@ -145,8 +160,8 @@ namespace Game.Control
 
         private void UpdateTimers()
         {
-            _timeSinceLastSawPlayer += Time.deltaTime;
             _timeSinceTouchedWaypoint += Time.deltaTime;
+            _timeSinceLastAttack += Time.deltaTime;
         }
 
         private bool AtWaypoint()
@@ -164,17 +179,36 @@ namespace Game.Control
         {
             return _patrolPath.GetWaypoint(_currentWaypointIndex);
         }
-
-        private bool InAttackRangeOfPlayer()
+        
+        public bool CanAttack(Health target)
         {
-            float distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);
-            return distanceToPlayer < _chaseDistance;
+            if (target == null) { return false; }
+            return !target.IsDead && IsInRange(target.transform);
         }
 
+        private bool IsInRange(Transform target)
+        {
+            return Vector3.Distance(transform.position, target.position) < _attackRange;
+        }
+
+        #if UNITY_EDITOR
+
+        [Header("EDITOR ONLY")]
+        [SerializeField] private bool _showGizmosGlobally = false;
+        
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = new Color(0, 138, 230);
-            Gizmos.DrawWireSphere(transform.position, _chaseDistance);
+            Gizmos.DrawWireSphere(transform.position, _attackRange);
         }
+
+        private void OnDrawGizmos()
+        {
+            if (!_showGizmosGlobally) return;
+            Gizmos.color = new Color(0, 138, 230);
+            Gizmos.DrawWireSphere(transform.position, _attackRange);
+        }
+        
+        #endif
     }
 }

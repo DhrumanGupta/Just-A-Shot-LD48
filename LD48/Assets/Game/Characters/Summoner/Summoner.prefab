@@ -97,8 +97,9 @@ GameObject:
   - component: {fileID: 3744890670701608534}
   - component: {fileID: 3744890670701608535}
   - component: {fileID: 3329400074802602458}
+  - component: {fileID: -8721154761834768738}
   m_Layer: 8
-  m_Name: Hitboi
+  m_Name: Summoner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,3 +278,33 @@ CircleCollider2D:
   m_Offset: {x: 0.15, y: -0.16332842}
   serializedVersion: 2
   m_Radius: 1.2339054
+--- !u!114 &-8721154761834768738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744890670701608529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c092e12b7d4141897240ac868ec9bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waypointDwellTime: 1
+  _waypointTolerance: 0.6
+  _speed: 0.2
+  _frictionForce: 0.8
+  _damage: 3
+  _attackRange: 20
+  _timeBetweenAttacks: 1
+  _runeScaleTime: 2
+  _runeScaleCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _patrolPath: {fileID: 0}
+  _runes: []
+  _laser: {fileID: 0}
+  _showGizmosGlobally: 0

@@ -8,14 +8,7 @@ namespace Game.Combat
         [SerializeField] private float _damage = 1f;
         [SerializeField] private float _attackRange = 1f;
         [SerializeField] private float _timeBetweenAttacks = 1f;
-
-        private Animator _animator;
         private float _timeSinceLastAttack = Mathf.Infinity;
-
-        private void Start()
-        {
-            _animator = GetComponent<Animator>();
-        }
 
         private void Update()
         {
