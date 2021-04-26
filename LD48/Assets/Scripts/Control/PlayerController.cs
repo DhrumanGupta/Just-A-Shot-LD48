@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Game.Combat;
 using Game.Environment;
 using UnityEngine;
 
@@ -7,7 +8,8 @@ namespace Game.Control
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BoxCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Fighter))]
+    [RequireComponent(typeof(Health))]
     public class PlayerController : MonoBehaviour
     {
         #region Private Variables
@@ -15,33 +17,32 @@ namespace Game.Control
         #region References
 
         private Rigidbody2D _rigidbody;
-        private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private Camera _camera;
-        [SerializeField] private LayerMask _whatIsGround;
-
+        private Fighter _fighter;
+        
         #endregion
 
         #region Movement Data
 
         private float _inputX;
 
-        [Space] [Header("Movement")]
+        [Space] [Header("Movement")] 
+        [SerializeField] private LayerMask _whatIsGround;
         [SerializeField] private float _moveSpeed;
-
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _frictionForce;
-        
-        [Header("Jumping")]
-        [SerializeField] private float _checkRadius = 0.2f;
+
+        [Header("Jumping")] [SerializeField] private float _checkRadius = 0.2f;
         [SerializeField] private Transform _groundCheck;
         [SerializeField] private int _airJumps = 1;
         private int _airJumpsLeft;
         private bool _isGrounded;
         private bool _isJumping;
-        
-        [Header("Wall Jumping")]
-        [SerializeField] private Transform _frontCheck;
+
+        [Header("Wall Jumping")] [SerializeField]
+        private Transform _frontCheck;
+
         [SerializeField] private float _wallSlideSpeed = 1f;
         [SerializeField] private int _wallJumps = 1;
 
@@ -59,10 +60,10 @@ namespace Game.Control
         [SerializeField] private GameObject _jumpEffectPrefab = null;
         private bool _isJumpEffectPrefabNotNull;
 
-        private new Transform transform;
-
         [Header("Interaction")]
         [SerializeField] private GameObject _interactSprite = null;
+
+        private new Transform transform;
 
         #endregion
 
@@ -71,10 +72,10 @@ namespace Game.Control
         private void Awake()
         {
             transform = GetComponent<Transform>();
-            this._camera = Camera.main;
-            this._rigidbody = GetComponent<Rigidbody2D>();
-            this._spriteRenderer = GetComponent<SpriteRenderer>();
-            this._animator = GetComponent<Animator>();
+            _camera = Camera.main;
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
+            _fighter = GetComponent<Fighter>();
 
             _animatorRunId = Animator.StringToHash("isWalking");
             _animatorGroundId = Animator.StringToHash("isGrounded");
@@ -115,7 +116,7 @@ namespace Game.Control
         private void FlipBasedOnDirection()
         {
             if (_inputX == 0) return;
-            
+
             var localScale = transform.localScale;
             localScale.x = _inputX < 0 ? -1f : 1f;
             transform.localScale = localScale;
@@ -143,10 +144,10 @@ namespace Game.Control
         #endregion
 
         #region Movement
-        
+
         private void Move()
         {
-             var currentVelocity = new Vector2(this._inputX * _moveSpeed, _rigidbody.velocity.y);
+            var currentVelocity = new Vector2(this._inputX * _moveSpeed, _rigidbody.velocity.y);
             _rigidbody.velocity = currentVelocity;
 
             // Apply some friction
@@ -163,7 +164,7 @@ namespace Game.Control
                 _airJumpsLeft = _airJumps;
                 _wallJumpsLeft = _wallJumps;
             }
-            
+
             if (!_isJumping) return;
 
             if (_isJumpEffectPrefabNotNull)
@@ -171,7 +172,7 @@ namespace Game.Control
 
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
             _rigidbody.AddForce(new Vector2(0, this._jumpForce), ForceMode2D.Impulse);
-            
+
             _isJumping = false;
 
             if (_isGrounded)
@@ -200,28 +201,31 @@ namespace Game.Control
                 Destroy(Instantiate(_jumpEffectPrefab, this._groundCheck.transform.position, Quaternion.identity), 4f);
 
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
-            
+
             _rigidbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
-            
+
             _isWallJumping = false;
             _wallJumpsLeft--;
         }
-        
+
         #endregion
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void Interact()
         {
             var results = new RaycastHit2D[3];
-            var size = Physics2D.RaycastNonAlloc(transform.position, transform.right * transform.localScale.x, results, 3f);
+            var size = Physics2D.RaycastNonAlloc(transform.position, transform.right * transform.localScale.x, results,
+                3f);
 
             if (size == 0) return;
 
-            var result = results.Where(x => x.transform != null && x.transform.TryGetComponent(out IInteractable _)).ToArray().FirstOrDefault();
-            IInteractable interactable = result.transform != null ? result.transform.GetComponent<IInteractable>() : null;
-            
+            var result = results.Where(x => x.transform != null && x.transform.TryGetComponent(out IInteractable _))
+                .ToArray().FirstOrDefault();
+            IInteractable interactable =
+                result.transform != null ? result.transform.GetComponent<IInteractable>() : null;
+
             var isInteractableNull = interactable == null;
-            
+
             if (_interactSprite.activeSelf && isInteractableNull) _interactSprite.SetActive(false);
             else if (!_interactSprite.activeSelf && !isInteractableNull) _interactSprite.SetActive(true);
 
@@ -233,6 +237,15 @@ namespace Game.Control
             {
                 StartCoroutine(interactable.Interact());
             }
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            // If collision wasn't from the bottom, dont do anything
+            if (Vector3.Dot(other.GetContact(0).normal, Vector3.up) <= 0.3) return;
+
+            if (!other.collider.TryGetComponent(out Health target)) return;
+            _fighter.Attack(target);
         }
     }
 }

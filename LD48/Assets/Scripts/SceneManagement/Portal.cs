@@ -20,10 +20,13 @@ namespace Game.SceneManagement
         [SerializeField] float fadeInTime = 1.5f;
         [SerializeField] float fadeWaitTime = .5f;
 
+        private bool _isTransitioning = false;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
+                if (_isTransitioning) return;
                 StartCoroutine(TransitionToScene());
             }
         }
@@ -31,6 +34,7 @@ namespace Game.SceneManagement
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator TransitionToScene()
         {
+            _isTransitioning = true;
             if (sceneToLoad < 0)
             {
                 Debug.LogError("Scene to lead not set (portal variable).");

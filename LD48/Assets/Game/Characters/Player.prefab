@@ -126,6 +126,9 @@ GameObject:
   - component: {fileID: 864685921062524490}
   - component: {fileID: 864685921062524493}
   - component: {fileID: 1318827297}
+  - component: {fileID: 572169031983208511}
+  - component: {fileID: 7151107873497199549}
+  - component: {fileID: 3851559558940259142}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -309,6 +312,46 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.65}
   serializedVersion: 2
   m_Radius: 0.608581
+--- !u!114 &572169031983208511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864685921062524494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d104735037843068b7cb6be0837f4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultWeapon: {fileID: 11400000, guid: 5439e742da7889743ad7ac042965d9f8, type: 2}
+  _timeBetweenAttacks: 1
+--- !u!114 &7151107873497199549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864685921062524494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2be5f935015402f4aa777f33e7bfe172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+--- !u!114 &3851559558940259142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864685921062524494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9976fef3598c4392b1e02b7e06416378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: ac62a124-f50f-4856-8f8f-93aee8a85221
 --- !u!1 &864685921789175420
 GameObject:
   m_ObjectHideFlags: 0

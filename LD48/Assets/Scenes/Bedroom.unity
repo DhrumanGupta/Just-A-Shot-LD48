@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13065131cf273ec4eba0302c046f4128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1396717404}
+  _player: {fileID: 1393632888}
   _npcPlayer: {fileID: 864685921933427413}
 --- !u!1 &706869827
 GameObject:
@@ -1556,12 +1556,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2983242424778223468, guid: 38cf1ebc0f941cf47bbae3c4310bf09b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1143072322384664426, guid: 38cf1ebc0f941cf47bbae3c4310bf09b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 38cf1ebc0f941cf47bbae3c4310bf09b, type: 3}
---- !u!1 &1396717404 stripped
+--- !u!1 &1393632888 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1143072323187012500, guid: 38cf1ebc0f941cf47bbae3c4310bf09b,
+  m_CorrespondingSourceObject: {fileID: 2983242424778223468, guid: 38cf1ebc0f941cf47bbae3c4310bf09b,
     type: 3}
   m_PrefabInstance: {fileID: 1393632887}
   m_PrefabAsset: {fileID: 0}
@@ -1746,8 +1751,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2122597721
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 6682738439518977790, guid: 15b20dcc3de0b2f4a8be0d989fb1fd49,
     type: 3}

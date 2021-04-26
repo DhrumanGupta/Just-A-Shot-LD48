@@ -31,8 +31,7 @@ namespace Game.Environment
             {
                 // If collision was from not the top, dont damage the object
                 var contact = other.GetContact(0);
-                print(contact.normal);
-                if (Vector3.Dot(contact.normal, Vector3.down) <= 0.4) return;
+                if (Vector3.Dot(contact.normal, Vector3.down) <= 0.3) return;
                 
                 DamageObject();
             }
