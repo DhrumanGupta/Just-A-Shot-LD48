@@ -1,17 +1,20 @@
 ﻿using System;
 using Game.Saving;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Combat
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] private float _maxHealth = 1f;
-        private float _health;
+        [SerializeField] private int _maxHealth = 10;
+        private int _health;
 
         [SerializeField] private GameObject _dropOnDeath = null;
         [SerializeField] private GameObject _deathEffect = null;
 
+        public event Action<int> OnHealthChanged;
+        
         public bool IsDead { get; private set; } = false;
 
         private void Start()
@@ -19,9 +22,10 @@ namespace Game.Combat
             if (_health == 0) _health = _maxHealth;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
             _health = Mathf.Max(_health - damage, 0);
+            OnHealthChanged?.Invoke(_health);
             if (_health == 0)
             {
                 Die();
@@ -47,7 +51,8 @@ namespace Game.Combat
 
         public void RestoreState(object state)
         {
-            _health = (float) state;
+            _health = (int) state;
+            OnHealthChanged?.Invoke(_health);
             if (_health == 0)
             {
                 Die();

@@ -7,10 +7,10 @@ namespace Game.Environment
     [RequireComponent(typeof(Collider2D))]
     public class DamagingObject : MonoBehaviour
     {
-        [SerializeField] private float _damage = 1f;
+        [SerializeField] private int _damage = 1;
         [SerializeField] private Health _target = null;
 
-        public void SetData(float damage, Health target)
+        public void SetData(int damage, Health target)
         {
             _damage = damage;
             _target = target;

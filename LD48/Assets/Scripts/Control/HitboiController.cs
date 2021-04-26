@@ -171,6 +171,16 @@ namespace Game.Control
             return distanceToPlayer < _chaseDistance;
         }
 
+        private void OnCollisionStay2D(Collision2D other)
+        {
+            if (!other.collider.CompareTag("Player")) return;
+            if (!other.collider.TryGetComponent(out Health target)) return;
+            if (_fighter.CanAttack(target))
+            {
+                _fighter.Attack(target);
+            }
+        }
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = new Color(0, 138, 230);

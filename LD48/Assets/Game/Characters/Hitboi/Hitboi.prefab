@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 1
-  _attackRange: 1
+  _attackRange: 3
   _timeBetweenAttacks: 1
 --- !u!114 &3744890670701608533
 MonoBehaviour:
@@ -190,6 +190,9 @@ MonoBehaviour:
   _dropOnDeath: {fileID: 0}
   _deathEffect: {fileID: 5616151149793413460, guid: 464e9025b51617d4ab703498efea668a,
     type: 3}
+  _onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!212 &3744890670701608534
 SpriteRenderer:
   m_ObjectHideFlags: 0

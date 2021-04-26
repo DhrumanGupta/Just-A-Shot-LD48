@@ -23,7 +23,7 @@ namespace Game.Control
 
         [Space]
         [Header("Attack Settings")]
-        [SerializeField] private float _damage = 1f;
+        [SerializeField] private int _damage = 1;
         [SerializeField] private float _attackRange = 1f;
         [SerializeField] private float _timeBetweenAttacks = 1f;
         [SerializeField] private float _runeScaleTime = 2f;
@@ -51,6 +51,8 @@ namespace Game.Control
         private Vector2 _movement = Vector2.zero;
         private int _animatorAttackId;
         private bool _isPatrolPathNotNull;
+
+        private bool _isAttacking;
 
         private void Start()
         {
@@ -105,18 +107,18 @@ namespace Game.Control
         
         private void UpdateAnimator()
         {
-            _animator.SetBool(_animatorAttackId, Mathf.Abs(_movement.x) > 0.1f);
+            _animator.SetBool(_animatorAttackId, _isAttacking);
         }
 
         private void AttackBehaviour()
         {
-            if (_timeBetweenAttacks > _timeSinceLastAttack) return;
+            if (_timeBetweenAttacks > _timeSinceLastAttack || !CanAttack(_player)) return;
             StartCoroutine(SpawnRuneLaser());
-
         }
 
         private IEnumerator SpawnRuneLaser()
         {
+            _isAttacking = true;
             var rune = Instantiate(_runes[Random.Range(0, _runes.Length)], _player.transform.position,
                 Quaternion.identity).transform;
             
@@ -134,6 +136,7 @@ namespace Game.Control
             rune.localScale = endScale;
             
             Instantiate(_laser, rune.position, Quaternion.identity).GetComponent<DamagingObject>().SetData(_damage, _player);
+            _isAttacking = false;
         }
 
         private void PatrolBehaviour()

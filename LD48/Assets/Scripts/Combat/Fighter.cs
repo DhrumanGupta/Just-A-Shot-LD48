@@ -5,7 +5,7 @@ namespace Game.Combat
 {
     public class Fighter : MonoBehaviour
     {
-        [SerializeField] private float _damage = 1f;
+        [SerializeField] private int _damage = 1;
         [SerializeField] private float _attackRange = 1f;
         [SerializeField] private float _timeBetweenAttacks = 1f;
         private float _timeSinceLastAttack = Mathf.Infinity;
