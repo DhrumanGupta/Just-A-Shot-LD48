@@ -35,7 +35,6 @@ namespace Game.Cinematics
         private void Update()
         {
             if (!_isPlaying) return;
-            print(AtWaypoint());
             if (AtWaypoint())
             {
                 _timeSinceTouchedWaypoint = 0;
@@ -47,7 +46,6 @@ namespace Game.Cinematics
                 {
                     if (_reachedEnd) return;
                     _reachedEnd = true;
-                    print("END");
                     StartCoroutine(EndAfterWait(GetWaitTime()));
                     _movement = Vector3.zero;
                 }

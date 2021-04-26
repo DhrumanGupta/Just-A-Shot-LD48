@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1441,11 +1441,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2193943108415113, guid: 921a0f16576073844b777da1d4e3480e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2193943108415113, guid: 921a0f16576073844b777da1d4e3480e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2193943108415113, guid: 921a0f16576073844b777da1d4e3480e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1453,7 +1453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2193943108415113, guid: 921a0f16576073844b777da1d4e3480e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -25.99
+      value: -26.77
       objectReference: {fileID: 0}
     - target: {fileID: 2193943108415113, guid: 921a0f16576073844b777da1d4e3480e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4509,7 +4509,7 @@ GameObject:
   - component: {fileID: 1399003837}
   - component: {fileID: 1399003839}
   - component: {fileID: 1399003838}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Wall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4524,8 +4524,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399003836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 189, y: -19.88, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 188.9506, y: -17.479, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 865348107}
   m_RootOrder: 6
@@ -4548,13 +4548,13 @@ BoxCollider2D:
     border: {x: 0.1, y: 0.1, z: 0.1, w: 0.1}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.3, y: 0.3}
-    newSize: {x: 0.61083984, y: 5.815027}
+    newSize: {x: 0.90219104, y: 13.786752}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 5.815027}
+  m_Size: {x: 0.902191, y: 13.78675}
   m_EdgeRadius: 0
 --- !u!212 &1399003839
 SpriteRenderer:
@@ -4601,7 +4601,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 0.61083984, y: 5.815027}
+  m_Size: {x: 0.90219104, y: 13.786752}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

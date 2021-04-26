@@ -27,14 +27,14 @@ namespace Game.Environment
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.CompareTag("Player"))
-            {
-                // If collision was from not the top, dont damage the object
-                var contact = other.GetContact(0);
-                if (Vector3.Dot(contact.normal, Vector3.down) <= 0.7f) return;
+            if (!other.collider.CompareTag("Player")) return;
+            if (Mathf.Abs(other.relativeVelocity.y) < 0.5f) return;
+            
+            // If collision was from not the top, dont damage the object
+            var contact = other.GetContact(0);
+            if (Vector3.Dot(contact.normal, Vector3.down) <= 0.7f) return;
                 
-                DamageObject();
-            }
+            DamageObject();
         }
 
         private void DamageObject()
