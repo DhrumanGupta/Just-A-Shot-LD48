@@ -24,9 +24,7 @@ namespace Game.Combat
 
         public void UpdateHealthBar(int health)
         {
-            print(health);
             var fullHearts = health / 2;
-            print(fullHearts);
             
             var hasHalfHeart = IntToBool(health % 2);
 

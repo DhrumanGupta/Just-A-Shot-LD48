@@ -84,9 +84,9 @@ MonoBehaviour:
   _waypointTolerance: 0.6
   _speed: 0.2
   _frictionForce: 0.8
-  _damage: 3
+  _damage: 2
   _attackRange: 20
-  _timeBetweenAttacks: 1
+  _timeBetweenAttacks: 5
   _runeScaleTime: 2
   _runeScaleCurve:
     serializedVersion: 2
@@ -112,6 +112,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _timeSinceLastAttack: 0
   _patrolPath: {fileID: 0}
   _runes:
   - {fileID: 4346747232184445326, guid: 0b67a909234894d4091db21c7988d04c, type: 3}
@@ -150,7 +151,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3
+  m_Mass: 6
   m_LinearDrag: 0.83
   m_AngularDrag: 0.6
   m_GravityScale: 1

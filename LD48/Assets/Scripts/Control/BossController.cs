@@ -13,24 +13,29 @@ namespace Game.Control
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Health))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public class SummonerController : MonoBehaviour
+    public class BossController : MonoBehaviour
     {
-        [Header("Stats")]
-        [SerializeField] private float _waypointDwellTime = 1f;
-        [SerializeField] private float _waypointTolerance = 0.6f;
-        [SerializeField] private float _speed = 7f;
-        [Range(0, 1)]
-        [SerializeField] private float _frictionForce = 2f;
-
+        enum Phase
+        {
+            Chill,
+            Angry
+        }
+        
         [Space]
+        
         [Header("Attack Settings")]
         [SerializeField] private int _damage = 1;
-        [SerializeField] private float _attackRange = 1f;
+        [SerializeField] private float _attackRange = 100f;
         [SerializeField] private float _timeBetweenAttacks = 1f;
-        [SerializeField] private float _runeScaleTime = 2f;
-        [SerializeField] private AnimationCurve _runeScaleCurve = null;
         
-        [SerializeField] private float _timeSinceLastAttack = 0f;
+        [Space]
+        
+        [SerializeField] private AnimationCurve _runeScaleCurve = null;
+        [SerializeField] private int _maxHealth = 20;
+        [Range(0, 1)] [SerializeField] private float _phaseChange = 0.6f;
+        
+        private float _timeSinceLastAttack = 0f;
+        private Phase _currentPhase = Phase.Chill;
 
         [Space]
         [Header("References")]
@@ -51,13 +56,9 @@ namespace Game.Control
         private Vector2 _movement = Vector2.zero;
         private int _animatorAttackId;
         private bool _isPatrolPathNotNull;
-        private bool _isAttacking;
-
-        private List<GameObject> _toDestroy;
 
         private void Start()
         {
-            _toDestroy = new List<GameObject>();
             _isPatrolPathNotNull = _patrolPath != null;
             _health = GetComponent<Health>();
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -108,64 +109,18 @@ namespace Game.Control
         
         private void UpdateAnimator()
         {
-            _animator.SetBool(_animatorAttackId, _isAttacking);
+            // _animator.SetBool(_animatorAttackId, _isAttacking);
         }
 
         private void AttackBehaviour()
         {
             _timeSinceLastAttack = 0f;
-            StartCoroutine(SpawnRuneLaser());
-        }
-
-        private IEnumerator SpawnRuneLaser()
-        {
-            _isAttacking = true;
-            var rune = Instantiate(_runes[Random.Range(0, _runes.Length)], _player.transform.position,
-                Quaternion.identity).transform;
-            _toDestroy.Add(rune.gameObject);
-            
-            var startScale = rune.localScale;
-            var endScale = startScale * 1.2f;
-            var start = Time.time;
-
-            while (Time.time < start + _runeScaleTime)
-            {
-                float completion = (Time.time - start) / _runeScaleTime;
-                rune.localScale = Vector3.Lerp(startScale, endScale, _runeScaleCurve.Evaluate(completion));
-                yield return null;
+            if (_currentPhase == Phase.Chill)
+            { 
+                // StartCoroutine(SpawnLaserOrSkull());
             }
-
-            rune.localScale = endScale;
-
-            var laser = Instantiate(_laser, rune.position, Quaternion.identity).transform;
-            _toDestroy.Add(laser.gameObject);
-            laser.GetComponent<DamagingObject>().SetData(_damage, _player);
-
-            endScale = new Vector3(0, 0, 0);
-            var laserEndScale = new Vector3(0, 1, 1);
-
-            yield return new WaitForSeconds(1f);
-            
-            start = Time.time;
-
-            while (Time.time < start + _runeScaleTime)
-            {
-                float completion = (Time.time - start) / _runeScaleTime;
-                rune.localScale = Vector3.Lerp(rune.localScale, endScale, _runeScaleCurve.Evaluate(completion));
-                if (laser != null) laser.localScale = Vector3.Lerp(laser.localScale, laserEndScale, _runeScaleCurve.Evaluate(completion));
-                yield return null;
-            }
-            
-            rune.localScale = endScale;
-            _toDestroy.Remove(rune.gameObject);
-            Destroy(rune.gameObject);
-            _isAttacking = false;
-            
-            if (laser == null) yield break;
-            laser.localScale = laserEndScale;
-            _toDestroy.Remove(laser.gameObject);
-            Destroy(laser.gameObject);
         }
+        
 
         private void PatrolBehaviour()
         {

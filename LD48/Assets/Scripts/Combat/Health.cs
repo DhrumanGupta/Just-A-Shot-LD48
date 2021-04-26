@@ -41,7 +41,11 @@ namespace Game.Combat
             if (_dropOnDeath != null) Instantiate(_dropOnDeath, pos, Quaternion.identity);
             if (_deathEffect != null) Instantiate(_deathEffect, pos, Quaternion.identity);
 
-            Destroy(gameObject);
+            if (!TryGetComponent(out CharacterController controller))
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
         public object CaptureState()

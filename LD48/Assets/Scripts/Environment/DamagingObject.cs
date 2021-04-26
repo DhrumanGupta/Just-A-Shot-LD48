@@ -19,7 +19,9 @@ namespace Game.Environment
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.TryGetComponent(out Health collision)) return;
-            if (_target == null || collision == _target) collision.TakeDamage(_damage);
+            if (_target != null && collision != _target) return;
+            collision.TakeDamage(_damage);
+            Destroy(gameObject);
         }
     }
 }
