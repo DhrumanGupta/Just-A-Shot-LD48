@@ -91,7 +91,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3744890670701608528}
   - component: {fileID: 3744890670701608537}
-  - component: {fileID: 3744890670701608538}
   - component: {fileID: 3744890670701608539}
   - component: {fileID: 3744890670701608532}
   - component: {fileID: 3744890670701608533}
@@ -139,32 +138,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &3744890670701608538
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3744890670701608529}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.06821644, y: -0.68216515}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.9, y: 2.8}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.6953504, y: 1.4356697}
-  m_EdgeRadius: 0
 --- !u!50 &3744890670701608539
 Rigidbody2D:
   serializedVersion: 4
@@ -282,9 +255,9 @@ MonoBehaviour:
   _chaseDistance: 2.5
   _suspicionTime: 3
   _waypointDwellTime: 1
-  _waypointTolerance: 0.6
-  _speed: 6
-  _frictionForce: 2
+  _waypointTolerance: 1
+  _speed: 0.5
+  _frictionForce: 0.801
   _patrolPath: {fileID: 0}
   _questionMark: {fileID: 3744890670362184554}
 --- !u!58 &3329400074802602458
@@ -300,6 +273,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.25, y: 0.39}
+  m_Offset: {x: 0.208271, y: -0.04120171}
   serializedVersion: 2
-  m_Radius: 0.9383763
+  m_Radius: 1.3278491
