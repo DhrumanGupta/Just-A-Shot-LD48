@@ -72,8 +72,8 @@ namespace Game.Control
 
         private void FixedUpdate()
         {
-            print("movement");
-            _rigidbody.AddForce(_movement);
+            print(_movement);
+            _rigidbody.AddForce(_movement, ForceMode2D.Impulse);
             
             // Apply some friction
             Vector2 friction = _rigidbody.velocity.normalized * _frictionForce;
