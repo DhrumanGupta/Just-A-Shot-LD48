@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 3744890670701608528, guid: 2a4b5613358e2b54e92efa44f9b119b9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.8
+      value: 36.88
       objectReference: {fileID: 0}
     - target: {fileID: 3744890670701608528, guid: 2a4b5613358e2b54e92efa44f9b119b9,
         type: 3}
@@ -198,6 +198,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FlipX
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3744890670701608535, guid: 2a4b5613358e2b54e92efa44f9b119b9,
+        type: 3}
+      propertyPath: _chaseDistance
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a4b5613358e2b54e92efa44f9b119b9, type: 3}
