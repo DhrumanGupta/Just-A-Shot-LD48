@@ -52,5 +52,16 @@ namespace Game.SceneManagement
             // Call saving system to load
             _savingSystem.Load(_defaultSaveFile);
         }
+
+        public void Delete()
+        {
+            _savingSystem.Delete(_defaultSaveFile);
+        }
+
+        public void LoadScene(int index)
+        {
+            SceneManager.LoadScene(index);
+            _savingSystem.Load(_defaultSaveFile);
+        }
     }
 }

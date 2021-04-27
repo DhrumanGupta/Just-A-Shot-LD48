@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3744890670701608533}
   - component: {fileID: 3744890670701608534}
   - component: {fileID: 3744890670701608535}
-  - component: {fileID: 3329400074802602458}
+  - component: {fileID: 1896567059}
   m_Layer: 8
   m_Name: Hitboi
   m_TagString: Untagged
@@ -190,9 +190,6 @@ MonoBehaviour:
   _dropOnDeath: {fileID: 0}
   _deathEffect: {fileID: 5616151149793413460, guid: 464e9025b51617d4ab703498efea668a,
     type: 3}
-  _onHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!212 &3744890670701608534
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -264,8 +261,8 @@ MonoBehaviour:
   _frictionForce: 0.801
   _patrolPath: {fileID: 0}
   _questionMark: {fileID: 3744890670362184554}
---- !u!58 &3329400074802602458
-CircleCollider2D:
+--- !u!70 &1896567059
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -277,6 +274,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15, y: -0.16332842}
-  serializedVersion: 2
-  m_Radius: 1.2339054
+  m_Offset: {x: 0.151809, y: 0}
+  m_Size: {x: 2.1626422, y: 2.9}
+  m_Direction: 0

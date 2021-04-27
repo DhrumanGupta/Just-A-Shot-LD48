@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Game.Environment;
+using Game.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.GameManagement
 {
@@ -12,6 +14,11 @@ namespace Game.GameManagement
         {
             yield return new WaitForSeconds(2f);
             yield return _endingNpc.GetComponent<IInteractable>().Interact();
+            
+            yield return new WaitForSeconds(1f);
+            GameObject.FindObjectOfType<SavingWrapper>().Delete();
+
+            SceneManager.LoadScene(0);
         }
     }   
 }

@@ -1,7 +1,7 @@
 ﻿using System;
+using Game.Control;
 using Game.Saving;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Game.Combat
 {
@@ -41,11 +41,13 @@ namespace Game.Combat
             if (_dropOnDeath != null) Instantiate(_dropOnDeath, pos, Quaternion.identity);
             if (_deathEffect != null) Instantiate(_deathEffect, pos, Quaternion.identity);
 
-            if (!TryGetComponent(out CharacterController controller))
+            if (!TryGetComponent(out PlayerController controller))
             {
                 Destroy(gameObject);
                 return;
             }
+
+            controller.Die();
         }
 
         public object CaptureState()
@@ -56,11 +58,11 @@ namespace Game.Combat
         public void RestoreState(object state)
         {
             _health = (int) state;
-            OnHealthChanged?.Invoke(_health);
             if (_health == 0)
             {
                 Die();
             }
+            OnHealthChanged?.Invoke(_health);
         }
     }
 }

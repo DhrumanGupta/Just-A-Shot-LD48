@@ -2,7 +2,9 @@
 using System.Linq;
 using Game.Combat;
 using Game.Environment;
+using Game.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Control
 {
@@ -238,6 +240,11 @@ namespace Game.Control
             {
                 StartCoroutine(interactable.Interact());
             }
+        }
+
+        public void Die()
+        {
+            GameObject.FindObjectOfType<SavingWrapper>().LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         private void OnCollisionEnter2D(Collision2D other)

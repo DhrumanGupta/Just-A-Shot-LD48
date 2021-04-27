@@ -115,10 +115,7 @@ namespace Game.Control
             {
                 var distance = Mathf.Clamp(_player.transform.position.x - _rigidbody.position.x, -1, 1) * _speed;
                 _movement = new Vector2(distance, 0);
-                return;
             }
-            
-            _fighter.Attack(_player);
         }
 
         private void PatrolBehaviour()
@@ -174,6 +171,9 @@ namespace Game.Control
         private void OnCollisionStay2D(Collision2D other)
         {
             if (!other.collider.CompareTag("Player")) return;
+            // If collision was from top, dont do anything
+            if (Vector3.Dot(other.GetContact(0).normal, Vector3.down) > 0.6f) return;
+            
             if (!other.collider.TryGetComponent(out Health target)) return;
             if (_fighter.CanAttack(target))
             {

@@ -10,7 +10,7 @@ namespace Game.Combat
         [SerializeField] private Sprite[] _hearts;
         private Image[] _images;
 
-        private void Start()
+        private void Awake()
         {
             _health.OnHealthChanged += UpdateHealthBar;
             
