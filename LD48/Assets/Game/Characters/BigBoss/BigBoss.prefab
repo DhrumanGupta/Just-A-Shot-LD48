@@ -52,9 +52,10 @@ MonoBehaviour:
   _timeBetweenAttacks: 1
   _maxHealth: 20
   _phaseChange: 0.6
-  _skullAttack: {fileID: 589730509, guid: 5cfdeb77af3d0eb42827982c5a6e79db, type: 3}
+  _skullAttack: {fileID: 7898988737326721348, guid: 5cfdeb77af3d0eb42827982c5a6e79db,
+    type: 3}
   _skullSpeed: 2
-  _laserAttack: {fileID: 6755233521249372957, guid: 142f4ab15c2fa9142abc2b5b6f38d221,
+  _laserAttack: {fileID: 9139026504578071948, guid: 142f4ab15c2fa9142abc2b5b6f38d221,
     type: 3}
   _laserSpeed: 5
   _enemiesToSpawn: []

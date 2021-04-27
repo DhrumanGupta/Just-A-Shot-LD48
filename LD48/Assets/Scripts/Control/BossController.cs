@@ -37,9 +37,9 @@ namespace Game.Control
 
         [Space]
         [Header("References")]
-        [SerializeField] private DamagingObject _skullAttack = null;
+        [SerializeField] private GameObject _skullAttack = null;
         [SerializeField] private float _skullSpeed = 2f;
-        [SerializeField] private DamagingObject _laserAttack = null;
+        [SerializeField] private GameObject _laserAttack = null;
         [SerializeField] private float _laserSpeed = 5f;
         [SerializeField] private GameObject[] _enemiesToSpawn = null;
 
@@ -103,7 +103,7 @@ namespace Game.Control
 
         private IEnumerator SpawnLaserOrSkull()
         {
-            DamagingObject chosenAttack;
+            GameObject chosenAttack;
             float speed;
             if (Random.value > 0.5f)
             {
@@ -120,7 +120,7 @@ namespace Game.Control
             var angle = Mathf.Atan(dir.x / dir.y);
             var eulerAngle = new Vector3(0, 0, angle);
 
-            var spawnedItem = Instantiate(chosenAttack.gameObject, transform.position, Quaternion.Euler(eulerAngle))
+            var spawnedItem = Instantiate(chosenAttack, transform.position, Quaternion.LookRotation(dir))
                 .transform;
             spawnedItem.GetComponent<DamagingObject>().SetData(_player);
             spawnedItem.GetComponent<Rigidbody2D>().velocity = dir * speed;
