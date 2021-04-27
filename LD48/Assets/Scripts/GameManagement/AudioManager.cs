@@ -5,7 +5,7 @@ namespace Game.GameManagement
 {
     public class AudioManager : MonoBehaviour
     {
-        public static KeyManager Instance { get; private set; }
+        public static AudioManager Instance { get; private set; }
 
         private void Awake()
         {
@@ -14,8 +14,8 @@ namespace Game.GameManagement
             DontDestroyOnLoad(transform.root);
         }
 
-        public void PlayMusic(AudioClip){
+        // public void PlayMusic(AudioClip){
 
-        }
+        // }
     }
 }

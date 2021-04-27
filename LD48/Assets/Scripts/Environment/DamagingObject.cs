@@ -10,6 +10,11 @@ namespace Game.Environment
         [SerializeField] private int _damage = 1;
         private Health _target = null;
 
+        public void SetData(Health target)
+        {
+            _target = target;
+        }
+        
         public void SetData(int damage, Health target)
         {
             _damage = damage;
